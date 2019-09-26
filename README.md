@@ -36,7 +36,6 @@ The default is `error`.
 
 Optional. Reporter of reviewdog command [`github-pr-check`,`github-pr-review`].
 The default is `github-pr-check`.
-`github-pr-review` can use Markdown and add a link to rule page in reviewdog reports.
 
 ### `flags`
 
