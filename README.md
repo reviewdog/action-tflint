@@ -31,7 +31,13 @@ the line:
 Optional. Report level for reviewdog [info,warning,error].
 It's same as `-level` flag of reviewdog.
 
-### `args`
+### `reporter`
+
+Reporter of reviewdog command [github-pr-check,github-pr-review].
+Default is github-pr-check.
+github-pr-review can use Markdown and add a link to rule page in reviewdog reports.
+
+### `flags`
 
 Optional. List of arguments to send to tflint.
 For the output to be parsable by reviewdog [`--format=checkstyle` is enforced](./entrypoint.sh).
@@ -71,5 +77,5 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review # Change reporter
-          args: "--deep" # Optional
+          flags: "--deep" # Optional
 ```
