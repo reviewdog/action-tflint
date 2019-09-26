@@ -4,7 +4,7 @@ author: 'vlaaaaaaad (reviewdog)'
 
 inputs:
   github_token:
-    description: 'GITHUB_TOKEN.'
+    description: 'GITHUB_TOKEN'
     required: true
   args:
     description: 'List of arguments to send to tflint'
