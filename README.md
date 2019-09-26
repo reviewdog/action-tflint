@@ -30,11 +30,12 @@ the Pull Request Conversation:
 
 Optional. Report level for reviewdog [`info`,`warning`,`error`].
 It's same as `-level` flag of reviewdog.
+The default is `error`.
 
 ### `reporter`
 
-Reporter of reviewdog command [`github-pr-check`,`github-pr-review`].
-Default is `github-pr-check`.
+Optional. Reporter of reviewdog command [`github-pr-check`,`github-pr-review`].
+The default is `github-pr-check`.
 `github-pr-review` can use Markdown and add a link to rule page in reviewdog reports.
 
 ### `flags`
