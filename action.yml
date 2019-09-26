@@ -1,0 +1,24 @@
+name: 'Run tflint with reviewdog'
+description: '🐶 Run tflint with reviewdog on pull requests to enforce best practices'
+author: 'vlaaaaaaad (reviewdog)'
+
+inputs:
+  github_token:
+    description: 'GITHUB_TOKEN.'
+    required: true
+  args:
+    description: 'List of arguments to send to tflint'
+    default: '--module --format=checkstyle'
+  level:
+    description: 'Report level for reviewdog [info,warning,error]'
+    default: 'error'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.github_token }}
+    - ${{ inputs.args }}
+    - ${{ inputs.level }}
+branding:
+  icon: 'edit'
+  color: 'gray-dark'
