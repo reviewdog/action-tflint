@@ -4,7 +4,21 @@ This action runs [tflint](https://github.com/wata727/tflint) with
 [reviewdog](https://github.com/reviewdog/reviewdog) on pull requests
 to enforce best practices.
 
-![Example comment made by the action](./example.png)
+## Examples
+
+### With `github-pr-review`
+
+By default, with `reporter: github-pr-review` a comment is added to
+the Pull Request Conversation:
+
+![Example comment made by the action, with github-pr-review](./example-github-pr-review.png)
+
+### With `github-pr-check`
+
+With `reporter: github-pr-check` an annotation is added to
+the line:
+
+![Example comment made by the action, with github-pr-check](./example-github-pr-check.png)
 
 ## Inputs
 
@@ -20,7 +34,8 @@ It's same as `-level` flag of reviewdog.
 ### `args`
 
 Optional. List of arguments to send to tflint.
-The default is `--module --format=checkstyle`.
+For the output to be parsable by reviewdog [`--format=checkstyle` is enforced](./entrypoint.sh).
+The default is `--module`.
 
 ## Example usage
 
@@ -54,5 +69,7 @@ jobs:
       - name: tflint
         uses: reviewdog/action-tflint@master
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review # Change reporter
+          args: "--deep" # Optional
 ```

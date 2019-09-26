@@ -6,19 +6,29 @@ inputs:
   github_token:
     description: 'GITHUB_TOKEN'
     required: true
-  args:
-    description: 'List of arguments to send to tflint'
-    default: '--module --format=checkstyle'
   level:
     description: 'Report level for reviewdog [info,warning,error]'
     default: 'error'
+  reporter:
+    description: |
+      Reporter of reviewdog command [github-pr-check,github-pr-review].
+      Default is github-pr-check.
+      github-pr-review can use Markdown and add a link to rule page in reviewdog reports.
+    default: 'github-pr-check'
+  args:
+    description: |
+      List of arguments to send to tflint
+      For the output to be parsable by reviewdog --format=checkstyle is enforced
+      Default is --module.
+    default: '--module'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.github_token }}
-    - ${{ inputs.args }}
     - ${{ inputs.level }}
+    - ${{ inputs.reporter }}
+    - ${{ inputs.args }}
 branding:
   icon: 'edit'
   color: 'gray-dark'
