@@ -82,12 +82,14 @@ jobs:
       # Install latest Terraform manually as
       #  Docker-based GitHub Actions are
       #  slow due to lack of caching
+      # Note: Terraform is not neede for tflint
       - name: Install Terraform
         run: |
           curl -LO https://raw.github.com/robertpeteuil/terraform-installer/master/terraform-install.sh
           chmod +x terraform-install.sh
           ./terraform-install.sh -a
 
+      # Run init to get module code to be able to use `--deep`
       - name: Terraform init
         run: |
           terraform init
