@@ -23,10 +23,10 @@ jobs:
       # The check is expected to fail on the test data
       - if: failure()
         run: |
-          return true
+          exit 0
       - if: success()
         run: |
-          return false
+          exit 1
 
   test-pr-check:
     if: github.event_name == 'pull_request'
@@ -45,10 +45,10 @@ jobs:
       # The check is expected to fail on the test data
       - if: failure()
         run: |
-          return true
+          exit 0
       - if: success()
         run: |
-          return false
+          exit 1
 
   test-pr-review:
     if: github.event_name == 'pull_request'
@@ -69,7 +69,7 @@ jobs:
       #  on the PR and report success
       - if: failure()
         run: |
-          return true
+          exit 0
       - if: success()
         run: |
-          return true
+          exit 0
