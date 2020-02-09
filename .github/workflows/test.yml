@@ -19,7 +19,7 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-check
-          directory: testdata
+          working_directory: testdata
 
       # The check is expected to fail on the test data
       - if: failure()
@@ -42,7 +42,7 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-check
-          directory: testdata
+          working_directory: testdata
 
       # The check is expected to fail on the test data
       - if: failure()
@@ -65,7 +65,7 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
-          directory: testdata
+          working_directory: testdata
 
       # The check is expected to fail on the test data
       #  but for forked PRs reviewdog will just output
