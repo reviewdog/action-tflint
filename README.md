@@ -1,10 +1,10 @@
 # GitHub Action: Run tflint with reviewdog
 
-[![Test](https://github.com/vlaaaaaaad/action-tflint/workflows/Test/badge.svg)](https://github.com/vlaaaaaaad/action-tflint/actions?query=workflow%3ATest)
-[![reviewdog](https://github.com/vlaaaaaaad/action-tflint/workflows/reviewdog/badge.svg)](https://github.com/vlaaaaaaad/action-tflint/actions?query=workflow%3Areviewdog)
-[![depup](https://github.com/vlaaaaaaad/action-tflint/workflows/depup/badge.svg)](https://github.com/vlaaaaaaad/action-tflint/actions?query=workflow%3Adepup)
-[![release](https://github.com/vlaaaaaaad/action-tflint/workflows/release/badge.svg)](https://github.com/vlaaaaaaad/action-tflint/actions?query=workflow%3Arelease)
-[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/vlaaaaaaad/action-tflint?logo=github&sort=semver)](https://github.com/vlaaaaaaad/action-tflint/releases)
+[![Test](https://github.com/reviewdog/action-tflint/workflows/Test/badge.svg)](https://github.com/reviewdog/action-tflint/actions?query=workflow%3ATest)
+[![reviewdog](https://github.com/reviewdog/action-tflint/workflows/reviewdog/badge.svg)](https://github.com/reviewdog/action-tflint/actions?query=workflow%3Areviewdog)
+[![depup](https://github.com/reviewdog/action-tflint/workflows/depup/badge.svg)](https://github.com/reviewdog/action-tflint/actions?query=workflow%3Adepup)
+[![release](https://github.com/reviewdog/action-tflint/workflows/release/badge.svg)](https://github.com/reviewdog/action-tflint/actions?query=workflow%3Arelease)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/reviewdog/action-tflint?logo=github&sort=semver)](https://github.com/reviewdog/action-tflint/releases)
 [![action-bumpr supported](https://img.shields.io/badge/bumpr-supported-ff69b4?logo=github&link=https://github.com/haya14busa/action-bumpr)](https://github.com/haya14busa/action-bumpr)
 
 This action runs [tflint](https://github.com/wata727/tflint) with
