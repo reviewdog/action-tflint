@@ -44,7 +44,7 @@ The default is `error`.
 Optional. Reporter of reviewdog command [`github-pr-check`,`github-pr-review`].
 The default is `github-pr-check`.
 
-### `working-directory`
+### `working_directory`
 
 Optional. Directory to run the action on, from the repo root.
 The default is `.` ( root of the repository).
@@ -86,7 +86,7 @@ jobs:
         uses: reviewdog/action-tflint@master
         with:
           github_token: ${{ secrets.github_token }}
-          working-directory: "testdata" # Change working directory
+          working_directory: "testdata" # Change working directory
           reporter: github-pr-review # Change reporter
           flags: "--deep" # Add custom flags
 ```
