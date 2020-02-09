@@ -44,6 +44,11 @@ The default is `error`.
 Optional. Reporter of reviewdog command [`github-pr-check`,`github-pr-review`].
 The default is `github-pr-check`.
 
+### `directory`
+
+Optional .Directory to run the action on, from the repo root.
+The default is `.` ( root of the repository).
+
 ### `flags`
 
 Optional. List of arguments to send to tflint.

@@ -9,5 +9,5 @@ fi
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 
 # shellcheck disable=SC2086
-tflint --format=checkstyle ${INPUT_FLAGS} . \
+tflint --format=checkstyle ${INPUT_FLAGS} "${INPUT_DIRECTORY}" \
   | reviewdog -f=checkstyle -name="tflint" -reporter="${INPUT_REPORTER}" -level="${INPUT_LEVEL}"
