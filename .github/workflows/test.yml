@@ -1,0 +1,46 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  test-check:
+    name: runner / <linter-name> (github-check)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-check
+
+  test-pr-check:
+    if: github.event_name == 'pull_request'
+    name: runner / <linter-name> (github-pr-check)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-check
+
+  test-pr-review:
+    if: github.event_name == 'pull_request'
+    name: runner / <linter-name> (github-pr-review)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
