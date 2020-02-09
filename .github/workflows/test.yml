@@ -20,6 +20,14 @@ jobs:
           reporter: github-check
           directory: testdata
 
+      # The check is expected to fail on the test data
+      - if: failure()
+        run: |
+          return true
+      - if: success()
+        run: |
+          return false
+
   test-pr-check:
     if: github.event_name == 'pull_request'
     name: runner / tflint (github-pr-check)
@@ -34,6 +42,14 @@ jobs:
           reporter: github-pr-check
           directory: testdata
 
+      # The check is expected to fail on the test data
+      - if: failure()
+        run: |
+          return true
+      - if: success()
+        run: |
+          return false
+
   test-pr-review:
     if: github.event_name == 'pull_request'
     name: runner / tflint (github-pr-review)
@@ -47,3 +63,13 @@ jobs:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
           directory: testdata
+
+      # The check is expected to fail on the test data
+      #  but for forked PRs reviewdog will just output
+      #  on the PR and report success
+      - if: failure()
+        run: |
+          return true
+      - if: success()
+        run: |
+          return true
