@@ -15,6 +15,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - uses: ./
+        continue-on-error: true
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-check
@@ -37,6 +38,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - uses: ./
+        continue-on-error: true
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-check
@@ -59,6 +61,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - uses: ./
+        continue-on-error: true
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
