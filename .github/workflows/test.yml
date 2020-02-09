@@ -25,7 +25,10 @@ jobs:
       - name: Dump steps context
         env:
           STEPS_CONTEXT: ${{ toJson(steps) }}
+<<<<<<< HEAD
         run: echo "$STEPS_CONTEXT"
+=======
+>>>>>>> a33fa89bc0ada731ce07bd1195a43d3fb80e9e3c
 
       # The check is expected to fail on the test data
       - name: Check return codes
