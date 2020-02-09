@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -11,3 +11,10 @@ export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 # shellcheck disable=SC2086
 tflint --format=checkstyle ${INPUT_FLAGS} "${INPUT_WORKING_DIRECTORY}" \
   | reviewdog -f=checkstyle -name="tflint" -reporter="${INPUT_REPORTER}" -level="${INPUT_LEVEL}"
+
+exit_code=$?
+
+echo ::set-output name=tflint-return-code::"${PIPESTATUS[0]}"
+echo ::set-output name=reviewdog-return-code::"${PIPESTATUS[1]}"
+
+exit $exit_code

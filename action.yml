@@ -26,6 +26,12 @@ inputs:
       Default is --module.
     default: '--module'
 
+outputs:
+  tflint-return-code:
+    description: 'tflint command return code'
+  reviewdog-return-code:
+    description: 'reviewdog command return code'
+
 runs:
   using: 'docker'
   image: 'Dockerfile'

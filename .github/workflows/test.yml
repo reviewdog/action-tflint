@@ -16,6 +16,7 @@ jobs:
 
       - uses: ./
         continue-on-error: true
+        id: test
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-check
@@ -24,10 +25,12 @@ jobs:
       # The check is expected to fail on the test data
       - if: failure()
         run: |
-          exit 0
+          echo ${{ steps.test.outputs.tflint-return-code }}
+          echo ${{ steps.test.outputs.reviewdog-return-code }}
       - if: success()
         run: |
-          exit 1
+          echo ${{ steps.test.outputs.tflint-return-code }}
+          echo ${{ steps.test.outputs.reviewdog-return-code }}
 
   test-pr-check:
     if: github.event_name == 'pull_request'
@@ -39,6 +42,7 @@ jobs:
 
       - uses: ./
         continue-on-error: true
+        id: test
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-check
@@ -47,10 +51,12 @@ jobs:
       # The check is expected to fail on the test data
       - if: failure()
         run: |
-          exit 0
+          echo ${{ steps.test.outputs.tflint-return-code }}
+          echo ${{ steps.test.outputs.reviewdog-return-code }}
       - if: success()
         run: |
-          exit 1
+          echo ${{ steps.test.outputs.tflint-return-code }}
+          echo ${{ steps.test.outputs.reviewdog-return-code }}
 
   test-pr-review:
     if: github.event_name == 'pull_request'
@@ -62,6 +68,7 @@ jobs:
 
       - uses: ./
         continue-on-error: true
+        id: test
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
@@ -72,7 +79,9 @@ jobs:
       #  on the PR and report success
       - if: failure()
         run: |
-          exit 0
+          echo ${{ steps.test.outputs.tflint-return-code }}
+          echo ${{ steps.test.outputs.reviewdog-return-code }}
       - if: success()
         run: |
-          exit 0
+          echo ${{ steps.test.outputs.tflint-return-code }}
+          echo ${{ steps.test.outputs.reviewdog-return-code }}

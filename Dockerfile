@@ -4,7 +4,7 @@ ENV REVIEWDOG_VERSION=v0.9.17
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
-RUN apk --no-cache --update add git curl \
+RUN apk --no-cache --update add bash git curl \
     && rm -rf /var/cache/apk/*
 
 RUN wget -O - -q https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b /usr/local/bin/ ${REVIEWDOG_VERSION}
