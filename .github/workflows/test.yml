@@ -21,6 +21,11 @@ jobs:
           github_token: ${{ secrets.github_token }}
           reporter: github-check
           working_directory: testdata
+      
+      - name: Dump steps context
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: echo "$STEPS_CONTEXT"
 
       # The check is expected to fail on the test data
       - name: Check return codes
