@@ -23,14 +23,11 @@ jobs:
           working_directory: testdata
 
       # The check is expected to fail on the test data
-      - if: failure()
+      - name: Check return codes
+        if: success() || failure ()
         run: |
-          echo ${{ steps.test.outputs.tflint-return-code }}
-          echo ${{ steps.test.outputs.reviewdog-return-code }}
-      - if: success()
-        run: |
-          echo ${{ steps.test.outputs.tflint-return-code }}
-          echo ${{ steps.test.outputs.reviewdog-return-code }}
+          echo "${{ steps.test.outputs.tflint-return-code }}"
+          echo "${{ steps.test.outputs.reviewdog-return-code }}"
 
   test-pr-check:
     if: github.event_name == 'pull_request'
@@ -49,14 +46,11 @@ jobs:
           working_directory: testdata
 
       # The check is expected to fail on the test data
-      - if: failure()
+      - name: Check return codes
+        if: success() || failure ()
         run: |
-          echo ${{ steps.test.outputs.tflint-return-code }}
-          echo ${{ steps.test.outputs.reviewdog-return-code }}
-      - if: success()
-        run: |
-          echo ${{ steps.test.outputs.tflint-return-code }}
-          echo ${{ steps.test.outputs.reviewdog-return-code }}
+          echo "${{ steps.test.outputs.tflint-return-code }}"
+          echo "${{ steps.test.outputs.reviewdog-return-code }}"
 
   test-pr-review:
     if: github.event_name == 'pull_request'
@@ -77,11 +71,8 @@ jobs:
       # The check is expected to fail on the test data
       #  but for forked PRs reviewdog will just output
       #  on the PR and report success
-      - if: failure()
+      - name: Check return codes
+        if: success() || failure ()
         run: |
-          echo ${{ steps.test.outputs.tflint-return-code }}
-          echo ${{ steps.test.outputs.reviewdog-return-code }}
-      - if: success()
-        run: |
-          echo ${{ steps.test.outputs.tflint-return-code }}
-          echo ${{ steps.test.outputs.reviewdog-return-code }}
+          echo "${{ steps.test.outputs.tflint-return-code }}"
+          echo "${{ steps.test.outputs.reviewdog-return-code }}"
