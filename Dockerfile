@@ -4,6 +4,7 @@ ENV REVIEWDOG_VERSION=v0.9.17
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
+# hadolint ignore=DL3018
 RUN apk --no-cache --update add bash git curl \
     && rm -rf /var/cache/apk/*
 

@@ -26,8 +26,22 @@ jobs:
       - name: Check return codes
         if: success() || failure ()
         run: |
-          echo "${{ steps.test.outputs.tflint-return-code }}"
-          echo "${{ steps.test.outputs.reviewdog-return-code }}"
+          tflint_return="${{ steps.test.outputs.tflint-return-code }}"
+          reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
+
+          if [ "$tflint_return" -eq 3 ]; then
+            echo "tflint correctly returned failure ${tflint_return}"
+          else
+            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            exit 1
+          fi
+
+          if [ "$reviewdog_return" -eq 1 ]; then
+            echo "reviewdog correctly returned failure: ${reviewdog_return}"
+          else
+            echo "reviewdog returned ${reviewdog_return}, expected '1'. Failing..."
+            exit 1
+          fi
 
   test-pr-check:
     if: github.event_name == 'pull_request'
@@ -49,8 +63,22 @@ jobs:
       - name: Check return codes
         if: success() || failure ()
         run: |
-          echo "${{ steps.test.outputs.tflint-return-code }}"
-          echo "${{ steps.test.outputs.reviewdog-return-code }}"
+          tflint_return="${{ steps.test.outputs.tflint-return-code }}"
+          reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
+
+          if [ "$tflint_return" -eq 3 ]; then
+            echo "tflint correctly returned failure ${tflint_return}"
+          else
+            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            exit 1
+          fi
+
+          if [ "$reviewdog_return" -eq 1 ]; then
+            echo "reviewdog correctly returned failure: ${reviewdog_return}"
+          else
+            echo "reviewdog returned ${reviewdog_return}, expected '1'. Failing..."
+            exit 1
+          fi
 
   test-pr-review:
     if: github.event_name == 'pull_request'
@@ -74,5 +102,19 @@ jobs:
       - name: Check return codes
         if: success() || failure ()
         run: |
-          echo "${{ steps.test.outputs.tflint-return-code }}"
-          echo "${{ steps.test.outputs.reviewdog-return-code }}"
+          tflint_return="${{ steps.test.outputs.tflint-return-code }}"
+          reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
+
+          if [ "$tflint_return" -eq 3 ]; then
+            echo "tflint correctly returned failure ${tflint_return}"
+          else
+            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            exit 1
+          fi
+
+          if [ "$reviewdog_return" -eq 0 ]; then
+            echo "reviewdog correctly returned failure: ${reviewdog_return}"
+          else
+            echo "reviewdog returned ${reviewdog_return}, expected '0'. Failing..."
+            exit 1
+          fi

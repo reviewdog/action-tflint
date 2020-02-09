@@ -55,6 +55,16 @@ Optional. List of arguments to send to tflint.
 For the output to be parsable by reviewdog [`--format=checkstyle` is enforced](./entrypoint.sh).
 The default is `--module`.
 
+## Outputs
+
+## `tflint-return-code`
+
+The `tflint` command return code.
+
+## `reviewdog-return-code`
+
+The `reviewdog` command return code.
+
 ## Example usage
 
 ```yml
