@@ -36,10 +36,10 @@ jobs:
             exit 1
           fi
 
-          if [ "$reviewdog_return" -eq 1 ]; then
-            echo "reviewdog correctly returned failure: ${reviewdog_return}"
+          if [ "$reviewdog_return" -eq 0 ]; then
+            echo "reviewdog correctly returned success: ${reviewdog_return}"
           else
-            echo "reviewdog returned ${reviewdog_return}, expected '1'. Failing..."
+            echo "reviewdog returned ${reviewdog_return}, expected '0'. Failing..."
             exit 1
           fi
 
@@ -73,10 +73,10 @@ jobs:
             exit 1
           fi
 
-          if [ "$reviewdog_return" -eq 1 ]; then
-            echo "reviewdog correctly returned failure: ${reviewdog_return}"
+          if [ "$reviewdog_return" -eq 0 ]; then
+            echo "reviewdog correctly returned success: ${reviewdog_return}"
           else
-            echo "reviewdog returned ${reviewdog_return}, expected '1'. Failing..."
+            echo "reviewdog returned ${reviewdog_return}, expected '0'. Failing..."
             exit 1
           fi
 
