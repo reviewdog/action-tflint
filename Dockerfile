@@ -10,7 +10,7 @@ RUN apk --no-cache --update add bash git \
 
 RUN wget -O - -q https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b /usr/local/bin/ ${REVIEWDOG_VERSION}
 
-RUN wget -O - -q "$(curl -s https://api.github.com/repos/terraform-linters/tflint/releases/latest | grep -o -E "https://.+?_linux_amd64.zip")" > tflint.zip \
+RUN wget -O - -q $(wget -q https://api.github.com/repos/terraform-linters/tflint/releases/latest -O - | grep -o -E "https://.+?_linux_amd64.zip") > tflint.zip \
     && unzip tflint.zip && rm tflint.zip \
     && install tflint /usr/local/bin/
 
