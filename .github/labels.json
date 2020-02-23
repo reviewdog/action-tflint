@@ -1,0 +1,42 @@
+[
+  {
+    "name": "kind/bug",
+    "color": "c7def8",
+    "description": "Categorizes issue or PR as related to a bug"
+  },
+  {
+    "name": "kind/cleanup",
+    "color": "c7def8",
+    "description": "Categorizes issue or PR as related to cleaning up code, process, or technical debt"
+  },
+  {
+    "name": "kind/documentation",
+    "color": "c7def8",
+    "description": "Categorizes issue or PR as related to documentation"
+  },
+  {
+    "name": "kind/feature",
+    "color": "c7def8",
+    "description": "Categorizes issue or PR as related to a new feature"
+  },
+  {
+    "name": "bump:major",
+    "color": "ef6bb4",
+    "description": "Attach to PR to automatically bump major version on merge"
+  },
+  {
+    "name": "bump:minor",
+    "color": "ef6bb4",
+    "description": "Attach to PR to automatically bump minor version on merge"
+  },
+  {
+    "name": "bump:patch",
+    "color": "ef6bb4",
+    "description": "Attach to PR to automatically bump patch version on merge"
+  },
+  {
+    "name": "do-not-merge/hold",
+    "color": "e11d21",
+    "description": "Indicated that a PR is not to be merged"
+  }
+]

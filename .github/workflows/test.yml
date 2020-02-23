@@ -1,0 +1,120 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  test-check:
+    name: runner / tflint (github-check)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./
+        continue-on-error: true
+        id: test
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-check
+          working_directory: testdata
+
+      # The check is expected to fail on the test data
+      - name: Check return codes
+        if: success() || failure ()
+        run: |
+          tflint_return="${{ steps.test.outputs.tflint-return-code }}"
+          reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
+
+          if [ "$tflint_return" -eq 3 ]; then
+            echo "tflint correctly returned failure ${tflint_return}"
+          else
+            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            exit 1
+          fi
+
+          if [ "$reviewdog_return" -eq 1 ]; then
+            echo "reviewdog correctly returned failure: ${reviewdog_return}"
+          else
+            echo "reviewdog returned ${reviewdog_return}, expected '1'. Failing..."
+            exit 1
+          fi
+
+  test-pr-check:
+    if: github.event_name == 'pull_request'
+    name: runner / tflint (github-pr-check)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./
+        continue-on-error: true
+        id: test
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-check
+          working_directory: testdata
+
+      # The check is expected to fail on the test data
+      - name: Check return codes
+        if: success() || failure ()
+        run: |
+          tflint_return="${{ steps.test.outputs.tflint-return-code }}"
+          reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
+
+          if [ "$tflint_return" -eq 3 ]; then
+            echo "tflint correctly returned failure ${tflint_return}"
+          else
+            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            exit 1
+          fi
+
+          if [ "$reviewdog_return" -eq 1 ]; then
+            echo "reviewdog correctly returned failure: ${reviewdog_return}"
+          else
+            echo "reviewdog returned ${reviewdog_return}, expected '1'. Failing..."
+            exit 1
+          fi
+
+  test-pr-review:
+    if: github.event_name == 'pull_request'
+    name: runner / tflint (github-pr-review)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./
+        continue-on-error: true
+        id: test
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          working_directory: testdata
+
+      # The check is expected to fail on the test data
+      #  but for forked PRs reviewdog will just output
+      #  on the PR and report success
+      - name: Check return codes
+        if: success() || failure ()
+        run: |
+          tflint_return="${{ steps.test.outputs.tflint-return-code }}"
+          reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
+
+          if [ "$tflint_return" -eq 3 ]; then
+            echo "tflint correctly returned failure ${tflint_return}"
+          else
+            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            exit 1
+          fi
+
+          if [ "$reviewdog_return" -eq 0 ]; then
+            echo "reviewdog correctly returned failure: ${reviewdog_return}"
+          else
+            echo "reviewdog returned ${reviewdog_return}, expected '0'. Failing..."
+            exit 1
+          fi

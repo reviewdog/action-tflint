@@ -1,18 +1,17 @@
 name: Docker Image CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - name: Clone repo
       uses: actions/checkout@master
-      with:
-        fetch-depth: 1
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag reviewdog-tflint:$(date +%s)
+      run: docker build . --file Dockerfile --tag $( echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]' ):$(date +%s)

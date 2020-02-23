@@ -1,0 +1,23 @@
+name: Labels
+
+on:
+  push:
+    paths:
+      - .github/labels.json
+      - .github/workflows/labels.yml
+    branches:
+      - master
+
+jobs:
+  Manage:
+    name: Manage GitHub labels
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Manage labels
+        uses: lannonbr/issue-label-manager-action@2.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
