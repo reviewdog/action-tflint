@@ -116,7 +116,10 @@ jobs:
           github_token: ${{ secrets.github_token }}
           working_directory: "testdata" # Change working directory
           reporter: github-pr-review # Change reporter
+          fail_on_error: "true" # Fail action if errors are found
+          filter_mode: "nofilter" # Check all files, not just the diff
           flags: "--deep" # Add custom flags
+
 ```
 
 ## Development
