@@ -44,6 +44,22 @@ The default is `error`.
 Optional. Reporter of reviewdog command [`github-pr-check`,`github-pr-review`].
 The default is `github-pr-check`.
 
+### `filter_mode`
+
+Optional. Filtering for the reviewdog command [`added`,`diff_context`,`file`,`nofilter`].
+
+The default is `added`.
+
+See [reviewdog doccumentation for filter mode](https://github.com/reviewdog/reviewdog/tree/master#filter-mode) for details.
+
+### `fail_on_error`
+
+Optional. Exit code for reviewdog when errors are found [`true`,`false`].
+
+The default is `false`.
+
+See [reviewdog doccumentation for exit codes](https://github.com/reviewdog/reviewdog/tree/master#exit-codes) for details.
+
 ### `working_directory`
 
 Optional. Directory to run the action on, from the repo root.
@@ -100,7 +116,10 @@ jobs:
           github_token: ${{ secrets.github_token }}
           working_directory: "testdata" # Change working directory
           reporter: github-pr-review # Change reporter
+          fail_on_error: "true" # Fail action if errors are found
+          filter_mode: "nofilter" # Check all files, not just the diff
           flags: "--deep" # Add custom flags
+
 ```
 
 ## Development

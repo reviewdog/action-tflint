@@ -1,6 +1,6 @@
 FROM alpine:3.11
 
-ENV REVIEWDOG_VERSION=v0.9.17
+ENV REVIEWDOG_VERSION=v0.10.0
 
 # hadolint ignore=DL3018
 RUN apk --no-cache --update add bash git \
