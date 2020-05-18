@@ -98,27 +98,32 @@ jobs:
       # Install latest Terraform manually as
       #  Docker-based GitHub Actions are
       #  slow due to lack of caching
-      # Note: Terraform is not neede for tflint
+      # Note: Terraform is not needed for tflint
       - name: Install Terraform
         run: |
-          curl -LO https://raw.github.com/robertpeteuil/terraform-installer/master/terraform-install.sh
-          chmod +x terraform-install.sh
-          ./terraform-install.sh -a
+          brew install terraform
 
-      # Run init to get module code to be able to use `--deep`
+      # Run init to get module code to be able to use `--module`
       - name: Terraform init
         run: |
           terraform init
 
+      # Minimal example
       - name: tflint
         uses: reviewdog/action-tflint@master
         with:
           github_token: ${{ secrets.github_token }}
-          working_directory: "testdata" # Change working directory
-          reporter: github-pr-review # Change reporter
-          fail_on_error: "true" # Fail action if errors are found
-          filter_mode: "nofilter" # Check all files, not just the diff
-          flags: "--deep" # Add custom flags
+
+      # More complex example
+      - name: tflint
+        uses: reviewdog/action-tflint@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          working_directory: "testdata" # Optional. Change working directory
+          reporter: github-pr-review # Optional. Change reporter
+          fail_on_error: "true" # Optional. Fail action if errors are found
+          filter_mode: "nofilter" # Optional. Check all files, not just the diff
+          flags: "--module" # Optional. Add custom tflint flags
 
 ```
 
