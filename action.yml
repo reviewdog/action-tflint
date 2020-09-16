@@ -39,12 +39,30 @@ inputs:
 outputs:
   tflint-return-code:
     description: 'tflint command return code'
+    value: ${{ steps.tflint.outputs.tflint-return-code }}
   reviewdog-return-code:
     description: 'reviewdog command return code'
+    value: ${{ steps.tflint.outputs.reviewdog-return-code }}
 
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: 'composite'
+  steps:
+    - run: $GITHUB_ACTION_PATH/script.sh
+      id: tflint
+      shell: bash
+      env:
+        # We may want to allow specifying reviewdog and golangci-lint version as
+        # action's input, but let's start with hard coded latest stable version.
+        REVIEWDOG_VERSION: v0.10.2
+        # INPUT_<VARIABLE_NAME> is not available in Composite run steps
+        # https://github.community/t/input-variable-name-is-not-available-in-composite-run-steps/127611
+        INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
+        INPUT_LEVEL: ${{ inputs.level }}
+        INPUT_REPORTER: ${{ inputs.reporter }}
+        INPUT_FILTER_MODE: ${{ inputs.filter_mode }}
+        INPUT_FAIL_ON_ERROR: ${{ inputs.fail_on_error }}
+        INPUT_WORKING_DIRECTORY: ${{ inputs.working_directory }}
+        INPUT_FLAGS: ${{ inputs.flags }}
 
 branding:
   icon: 'edit'
