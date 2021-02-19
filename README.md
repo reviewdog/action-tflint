@@ -5,6 +5,7 @@
 [![release](https://github.com/reviewdog/action-tflint/workflows/release/badge.svg)](https://github.com/reviewdog/action-tflint/actions?query=workflow%3Arelease)
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/reviewdog/action-tflint?logo=github&sort=semver)](https://github.com/reviewdog/action-tflint/releases)
 [![action-bumpr supported](https://img.shields.io/badge/bumpr-supported-ff69b4?logo=github&link=https://github.com/haya14busa/action-bumpr)](https://github.com/haya14busa/action-bumpr)
+[![depup](https://github.com/reviewdogaction-tflint/workflows/depup/badge.svg?branch=master&event=push)](https://github.com/reviewdog/action-tflint/actions?query=workflow%3Adepup+event%3Apush+branch%3Amaster)
 
 This action runs [tflint](https://github.com/wata727/tflint) with
 [reviewdog](https://github.com/reviewdog/reviewdog) on pull requests
@@ -49,7 +50,7 @@ Optional. Filtering for the reviewdog command [`added`,`diff_context`,`file`,`no
 
 The default is `added`.
 
-See [reviewdog doccumentation for filter mode](https://github.com/reviewdog/reviewdog/tree/master#filter-mode) for details.
+See [reviewdog documentation for filter mode](https://github.com/reviewdog/reviewdog/tree/master#filter-mode) for details.
 
 ### `fail_on_error`
 
@@ -57,7 +58,7 @@ Optional. Exit code for reviewdog when errors are found [`true`,`false`].
 
 The default is `false`.
 
-See [reviewdog doccumentation for exit codes](https://github.com/reviewdog/reviewdog/tree/master#exit-codes) for details.
+See [reviewdog documentation for exit codes](https://github.com/reviewdog/reviewdog/tree/master#exit-codes) for details.
 
 ### `working_directory`
 
@@ -66,7 +67,7 @@ The default is `.` ( root of the repository).
 
 ### `flags`
 
-Optional. List of arguments to send to tflint.
+Optional. List of arguments to send to `tflint`.
 For the output to be parsable by reviewdog [`--format=checkstyle` is enforced](./entrypoint.sh).
 The default is `--module`.
 
@@ -131,6 +132,7 @@ jobs:
 ### Release
 
 #### [haya14busa/action-bumpr](https://github.com/haya14busa/action-bumpr)
+
 You can bump version on merging Pull Requests with specific labels (bump:major,bump:minor,bump:patch).
 Pushing tag manually by yourself also work.
 
