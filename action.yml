@@ -56,6 +56,8 @@ runs:
       id: tflint
       shell: bash
       env:
+        # We may want to allow specifying reviewdog version as
+        # action's input, but let's start with hard coded latest stable version for reviewdog
         REVIEWDOG_VERSION: v0.11.0
         # INPUT_<VARIABLE_NAME> is not available in Composite run steps
         # https://github.community/t/input-variable-name-is-not-available-in-composite-run-steps/127611
