@@ -10,10 +10,7 @@ curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.s
 echo '::endgroup::'
 
 echo '::group:: Installing tflint ... https://github.com/terraform-linters/tflint'
-curl -sfL https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh > install_tflint_linux.sh
-chmod +x install_tflint_linux.sh
-TFLINT_VERSION="${INPUT_TFLINT_VERSION}" ./install_tflint_linux.sh
-rm install_tflint_linux.sh
+curl -sfL https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | TFLINT_VERSION="${INPUT_TFLINT_VERSION}" bash
 echo '::endgroup::'
 
 
