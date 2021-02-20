@@ -10,7 +10,7 @@ curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.s
 echo '::endgroup::'
 
 echo '::group:: Installing tflint ... https://github.com/terraform-linters/tflint'
-curl -L "$(curl -Ls https://api.github.com/repos/terraform-linters/tflint/releases/latest | grep -o -E "https://.+?_linux_amd64.zip")" -o tflint.zip && unzip tflint.zip -d "${TEMP_PATH}" && rm tflint.zip
+curl -sfL https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | TFLINT_VERSION="${INPUT_TFLINT_VERSION}" bash
 echo '::endgroup::'
 
 

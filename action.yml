@@ -29,6 +29,11 @@ inputs:
       Directory to run the action on, from the repo root.
       Default is . ( root of the repository)
     default: '.'
+  tflint_version:
+    description: |
+      The tflint version to install and use.
+      Default is to use the latest release version.
+    default: 'latest'
   flags:
     description: |
       List of arguments to send to tflint
@@ -51,9 +56,8 @@ runs:
       id: tflint
       shell: bash
       env:
-        # We may want to allow specifying reviewdog and tflint version as
+        # We may want to allow specifying reviewdog version as
         # action's input, but let's start with hard coded latest stable version for reviewdog
-        # and latest release for tflint
         REVIEWDOG_VERSION: v0.11.0
         # INPUT_<VARIABLE_NAME> is not available in Composite run steps
         # https://github.community/t/input-variable-name-is-not-available-in-composite-run-steps/127611
@@ -63,6 +67,7 @@ runs:
         INPUT_FILTER_MODE: ${{ inputs.filter_mode }}
         INPUT_FAIL_ON_ERROR: ${{ inputs.fail_on_error }}
         INPUT_WORKING_DIRECTORY: ${{ inputs.working_directory }}
+        INPUT_TFLINT_VERSION: ${{ inputs.tflint_version }}
         INPUT_FLAGS: ${{ inputs.flags }}
 
 branding:

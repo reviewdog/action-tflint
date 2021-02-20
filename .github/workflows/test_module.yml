@@ -24,6 +24,7 @@ jobs:
           reporter: github-pr-check
           level: info
           working_directory: testdata_module
+          tflint_version: v0.23.0
 
       # The check is expected to fail on the test data
       - name: Check return codes
