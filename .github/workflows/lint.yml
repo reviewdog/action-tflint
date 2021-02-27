@@ -1,4 +1,4 @@
-name: reviewdog
+name: Lint
 
 on:
   push:
@@ -7,8 +7,7 @@ on:
   pull_request:
 
 jobs:
-  shellcheck:
-    name: runner / shellcheck
+  Shellcheck:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,8 +26,7 @@ jobs:
           reporter: ${{ steps.reporter.outputs.value }}
           level: warning
 
-  hadolint:
-    name: runner / hadolint
+  Hadolint:
     runs-on: ubuntu-latest
 
     steps:
@@ -47,8 +45,7 @@ jobs:
           reporter: ${{ steps.reporter.outputs.value }}
           level: warning
 
-  misspell:
-    name: runner / misspell
+  Misspell:
     runs-on: ubuntu-latest
 
     steps:

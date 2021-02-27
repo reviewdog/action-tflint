@@ -1,4 +1,4 @@
-name: Test
+name: Tests
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   test-check:
-    name: runner / tflint (github-check)
+    name: tflint (github-check)
     runs-on: ubuntu-latest
 
     steps:
@@ -21,7 +21,7 @@ jobs:
           github_token: ${{ secrets.github_token }}
           reporter: github-check
           level: info
-          working_directory: testdata
+          working_directory: tests/reviewdog-reporters
 
       # The check is expected to fail on the test data
       - name: Check return codes
@@ -46,7 +46,7 @@ jobs:
 
   test-pr-check:
     if: github.event_name == 'pull_request'
-    name: runner / tflint (github-pr-check)
+    name: tflint (github-pr-check)
     runs-on: ubuntu-latest
 
     steps:
@@ -59,7 +59,7 @@ jobs:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-check
           level: info
-          working_directory: testdata
+          working_directory: tests/reviewdog-reporters
 
       # The check is expected to fail on the test data
       - name: Check return codes
@@ -84,7 +84,7 @@ jobs:
 
   test-pr-review:
     if: github.event_name == 'pull_request'
-    name: runner / tflint (github-pr-review)
+    name: tflint (github-pr-review)
     runs-on: ubuntu-latest
 
     steps:
@@ -97,7 +97,7 @@ jobs:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
           level: info
-          working_directory: testdata
+          working_directory: tests/reviewdog-reporters
 
       # The check is expected to fail on the test data
       #  but for forked PRs reviewdog will just output
@@ -117,6 +117,85 @@ jobs:
 
           if [ "$reviewdog_return" -eq 0 ]; then
             echo "reviewdog correctly returned failure: ${reviewdog_return}"
+          else
+            echo "reviewdog returned ${reviewdog_return}, expected '0'. Failing..."
+            exit 1
+          fi
+
+  test-rulesets:
+    name: tflint (rulesets)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./
+        continue-on-error: true
+        id: test
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-check
+          level: info
+          tflint_rulesets: "azurerm google"
+          working_directory: tests/rulesets
+
+      # The check is expected to fail on the test data
+      - name: Check return codes
+        if: success() || failure ()
+        run: |
+          tflint_return="${{ steps.test.outputs.tflint-return-code }}"
+          reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
+
+          if [ "$tflint_return" -eq 3 ]; then
+            echo "tflint correctly returned failure ${tflint_return}"
+          else
+            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            exit 1
+          fi
+
+          if [ "$reviewdog_return" -eq 0 ]; then
+            echo "reviewdog correctly returned success: ${reviewdog_return}"
+          else
+            echo "reviewdog returned ${reviewdog_return}, expected '0'. Failing..."
+            exit 1
+          fi
+
+  test-modules:
+    if: github.event_name == 'pull_request'
+    name: tflint (modules)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+
+      - run: terraform init
+        working-directory: tests/modules
+
+      - uses: ./
+        continue-on-error: true
+        id: test
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-check
+          level: info
+          working_directory: tests/modules
+          tflint_version: v0.23.0
+
+      # The check is expected to fail on the test data
+      - name: Check return codes
+        if: success() || failure ()
+        run: |
+          tflint_return="${{ steps.test.outputs.tflint-return-code }}"
+          reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
+          if [ "$tflint_return" -eq 3 ]; then
+            echo "tflint correctly returned failure ${tflint_return}"
+          else
+            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            exit 1
+          fi
+          if [ "$reviewdog_return" -eq 0 ]; then
+            echo "reviewdog correctly returned success: ${reviewdog_return}"
           else
             echo "reviewdog returned ${reviewdog_return}, expected '0'. Failing..."
             exit 1
