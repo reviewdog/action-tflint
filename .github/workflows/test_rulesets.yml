@@ -1,0 +1,46 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  test-rulesets:
+    name: runner / tflint (rulesets)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./
+        continue-on-error: true
+        id: test
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-check
+          level: info
+          tflint_rulesets: "azurerm google"
+          working_directory: testdata_rulesets
+
+      # The check is expected to fail on the test data
+      - name: Check return codes
+        if: success() || failure ()
+        run: |
+          tflint_return="${{ steps.test.outputs.tflint-return-code }}"
+          reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
+
+          if [ "$tflint_return" -eq 3 ]; then
+            echo "tflint correctly returned failure ${tflint_return}"
+          else
+            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            exit 1
+          fi
+
+          if [ "$reviewdog_return" -eq 0 ]; then
+            echo "reviewdog correctly returned success: ${reviewdog_return}"
+          else
+            echo "reviewdog returned ${reviewdog_return}, expected '0'. Failing..."
+            exit 1
+          fi

@@ -70,6 +70,11 @@ The default is `.` ( root of the repository).
 Optional. The tflint version to install and use.
 The default is `latest`.
 
+### `tflint_rulesets`
+
+Optional. Non-default tflint rulesets to install and use.
+Default is `` (empty).
+
 ### `flags`
 
 Optional. List of arguments to send to `tflint`.
@@ -129,6 +134,7 @@ jobs:
           fail_on_error: "true" # Optional. Fail action if errors are found
           filter_mode: "nofilter" # Optional. Check all files, not just the diff
           tflint_version: "v0.24.0" # Optional. Custom version, instead of latest
+          tflint_rulesets: "azurerm google" # Optional. Extra rulesets to install
           flags: "--module" # Optional. Add custom tflint flags
 
 ```
