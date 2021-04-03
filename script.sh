@@ -13,7 +13,13 @@ echo '::group:: Installing tflint ... https://github.com/terraform-linters/tflin
 curl -sfL https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | TFLINT_VERSION="${INPUT_TFLINT_VERSION}" bash
 echo '::endgroup::'
 
-export TFLINT_PLUGIN_DIR="${TEMP_PATH}/.tflint.d/plugins"
+if [[ -z "${TFLINT_PLUGIN_DIR}" ]]; then
+  export TFLINT_PLUGIN_DIR="${TEMP_PATH}/.tflint.d/plugins"
+  echo "TFLINT_PLUGIN_DIR=$TFLINT_PLUGIN_DIR" >> "$GITHUB_ENV"
+else
+  echo "Found pre-configured TFLINT_PLUGIN_DIR=$TFLINT_PLUGIN_DIR"
+fi
+
 for RULESET in ${INPUT_TFLINT_RULESETS}; do
   PLUGIN="tflint-ruleset-${RULESET}"
   REPOSITORY="https://github.com/terraform-linters/${PLUGIN}"
