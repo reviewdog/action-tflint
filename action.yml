@@ -36,7 +36,7 @@ inputs:
     default: 'latest'
   tflint_rulesets:
     description: |
-      Non-default tflint rulesets to install and use.
+      Space separated, official (from the terraform-linters GitHub organization) tflint rulesets to install and use.
       Default is empty.
     default: ''
   flags:
