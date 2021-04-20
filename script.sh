@@ -25,32 +25,32 @@ echo '::group::Preparing'
   REVIEWDOG_PATH="${TEMP_PATH}/reviewdog"
   TFLINT_PATH="${TEMP_PATH}/tflint"
 
+  if [[ -z "${INPUT_TFLINT_VERSION}" ]] || [[ "${INPUT_TFLINT_VERSION}" == "latest" ]]; then
+    echo "Looking up the latest tflint version ..."
+    tflint_version=$(curl --silent "https://api.github.com/repos/terraform-linters/tflint/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+  else
+    tflint_version=${INPUT_TFLINT_VERSION}
+  fi
+
   if [[ -z "${TFLINT_PLUGIN_DIR}" ]]; then
     export TFLINT_PLUGIN_DIR="${TFLINT_PATH}/.tflint.d/plugins"
     mkdir -p "${TFLINT_PLUGIN_DIR}"
-    echo "TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR}" >> "$GITHUB_ENV"
+    echo "TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR}" >> "${GITHUB_ENV}"
   else
     echo "Found pre-configured TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR}"
   fi
 echo '::endgroup::'
 
-echo '::group::🐶 Installing reviewdog ... https://github.com/reviewdog/reviewdog'
+echo "::group::🐶 Installing reviewdog (${REVIEWDOG_VERSION}) ... https://github.com/reviewdog/reviewdog"
   curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b "${REVIEWDOG_PATH}" "${REVIEWDOG_VERSION}" 2>&1
 
-  echo "$REVIEWDOG_PATH" >> "$GITHUB_PATH"
-  export PATH="$REVIEWDOG_PATH:$PATH"
+  echo "${REVIEWDOG_PATH}" >> "${GITHUB_PATH}"
+  export PATH="${REVIEWDOG_PATH}:${PATH}"
 echo '::endgroup::'
 
-echo '::group:: Installing tflint ... https://github.com/terraform-linters/tflint'
-  if [[ -z "${INPUT_TFLINT_VERSION}" ]] || [[ "${INPUT_TFLINT_VERSION}" == "latest" ]]; then
-    echo "Looking up the latest version ..."
-    version=$(curl --silent "https://api.github.com/repos/terraform-linters/tflint/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-  else
-    version=${INPUT_TFLINT_VERSION}
-  fi
-
+echo "::group:: Installing tflint (${tflint_version}) ... https://github.com/terraform-linters/tflint"
   curl --silent --show-error --fail \
-    --location "https://github.com/terraform-linters/tflint/releases/download/${version}/tflint_${os}_${arch}.zip" \
+    --location "https://github.com/terraform-linters/tflint/releases/download/${tflint_version}/tflint_${os}_${arch}.zip" \
     --output "${TEMP_PATH}/tflint.zip"
 
   unzip -u "${TEMP_PATH}/tflint.zip" -d "${TEMP_PATH}/temp-tflint"
@@ -58,16 +58,15 @@ echo '::group:: Installing tflint ... https://github.com/terraform-linters/tflin
   install "${TEMP_PATH}/temp-tflint/tflint" "${TFLINT_PATH}"
   rm -rf "${TEMP_PATH}/tflint.zip" "${TEMP_PATH}/temp-tflint"
 
-  echo "${TFLINT_PATH}" >> "$GITHUB_PATH"
-  export PATH="${TFLINT_PATH}:$PATH"
+  echo "${TFLINT_PATH}" >> "${GITHUB_PATH}"
+  export PATH="${TFLINT_PATH}:${PATH}"
 echo '::endgroup::'
-
 
 for RULESET in ${INPUT_TFLINT_RULESETS}; do
   PLUGIN="tflint-ruleset-${RULESET}"
   REPOSITORY="https://github.com/terraform-linters/${PLUGIN}"
 
-  echo "::group:: Installing tflint plugin for ${RULESET} ... ${REPOSITORY}"
+  echo "::group:: Installing tflint plugin for ${RULESET} (latest) ... ${REPOSITORY}"
     curl --silent --show-error --fail \
       --location "${REPOSITORY}"/releases/latest/download/"${PLUGIN}"_"${os}"_"${arch}".zip \
       --output "${PLUGIN}".zip \
@@ -75,20 +74,26 @@ for RULESET in ${INPUT_TFLINT_RULESETS}; do
   echo '::endgroup::'
 done
 
-echo "::group:: Print tflint version details"
+echo "::group:: Print tflint details ..."
   tflint --version
 echo '::endgroup::'
+
 
 
 echo '::group:: Running tflint with reviewdog 🐶 ...'
   export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
   # shellcheck disable=SC2086
   tflint --format=checkstyle ${INPUT_FLAGS} . \
-    | reviewdog -f=checkstyle -name="tflint" -reporter="${INPUT_REPORTER}" -level="${INPUT_LEVEL}" -fail-on-error="${INPUT_FAIL_ON_ERROR}" -filter-mode="${INPUT_FILTER_MODE}"
+    | reviewdog -f=checkstyle \
+        -name="tflint" \
+        -reporter="${INPUT_REPORTER}" \
+        -level="${INPUT_LEVEL}" \
+        -fail-on-error="${INPUT_FAIL_ON_ERROR}" \
+        -filter-mode="${INPUT_FILTER_MODE}"
 
   tflint_return="${PIPESTATUS[0]}" reviewdog_return="${PIPESTATUS[1]}" exit_code=$?
   echo "::set-output name=tflint-return-code::${tflint_return}"
   echo "::set-output name=reviewdog-return-code::${reviewdog_return}"
 echo '::endgroup::'
 
-exit $exit_code
+exit "${exit_code}"
