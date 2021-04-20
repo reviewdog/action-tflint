@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Fail fast on errors, unset variables, and failures in piped commands
+set -Eeuo pipefail
+
 cd "${GITHUB_WORKSPACE}/${INPUT_WORKING_DIRECTORY}" || exit
 
 echo '::group::Preparing'
@@ -27,12 +30,12 @@ echo '::group::Preparing'
 
   if [[ -z "${INPUT_TFLINT_VERSION}" ]] || [[ "${INPUT_TFLINT_VERSION}" == "latest" ]]; then
     echo "Looking up the latest tflint version ..."
-    tflint_version=$(curl --silent "https://api.github.com/repos/terraform-linters/tflint/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+    tflint_version=$(curl --silent --show-error --fail --location "https://api.github.com/repos/terraform-linters/tflint/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
   else
     tflint_version=${INPUT_TFLINT_VERSION}
   fi
 
-  if [[ -z "${TFLINT_PLUGIN_DIR}" ]]; then
+  if [[ -z "${TFLINT_PLUGIN_DIR:-}" ]]; then
     export TFLINT_PLUGIN_DIR="${TFLINT_PATH}/.tflint.d/plugins"
     mkdir -p "${TFLINT_PLUGIN_DIR}"
     echo "TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR}" >> "${GITHUB_ENV}"
@@ -82,6 +85,10 @@ echo '::endgroup::'
 
 echo '::group:: Running tflint with reviewdog 🐶 ...'
   export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
+
+  # Allow failures now, as reviewdog handles them
+  set +Eeuo pipefail
+
   # shellcheck disable=SC2086
   tflint --format=checkstyle ${INPUT_FLAGS} . \
     | reviewdog -f=checkstyle \
