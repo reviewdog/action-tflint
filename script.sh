@@ -82,7 +82,6 @@ echo "::group:: Print tflint details ..."
 echo '::endgroup::'
 
 
-
 echo '::group:: Running tflint with reviewdog 🐶 ...'
   export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 

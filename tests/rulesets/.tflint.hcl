@@ -1,3 +1,3 @@
 plugin "azurerm" {
-    enabled = true
+  enabled = true
 }
