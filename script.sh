@@ -38,7 +38,6 @@ echo '::group::Preparing'
   if [[ -z "${TFLINT_PLUGIN_DIR:-}" ]]; then
     export TFLINT_PLUGIN_DIR="${TFLINT_PATH}/.tflint.d/plugins"
     mkdir -p "${TFLINT_PLUGIN_DIR}"
-    echo "TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR}" >> "${GITHUB_ENV}"
   else
     echo "Found pre-configured TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR}"
   fi
@@ -46,9 +45,6 @@ echo '::endgroup::'
 
 echo "::group::🐶 Installing reviewdog (${REVIEWDOG_VERSION}) ... https://github.com/reviewdog/reviewdog"
   curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b "${REVIEWDOG_PATH}" "${REVIEWDOG_VERSION}" 2>&1
-
-  echo "${REVIEWDOG_PATH}" >> "${GITHUB_PATH}"
-  export PATH="${REVIEWDOG_PATH}:${PATH}"
 echo '::endgroup::'
 
 echo "::group:: Installing tflint (${tflint_version}) ... https://github.com/terraform-linters/tflint"
@@ -60,9 +56,6 @@ echo "::group:: Installing tflint (${tflint_version}) ... https://github.com/ter
   test ! -d "${TFLINT_PATH}" && install -d "${TFLINT_PATH}"
   install "${TEMP_PATH}/temp-tflint/tflint" "${TFLINT_PATH}"
   rm -rf "${TEMP_PATH}/tflint.zip" "${TEMP_PATH}/temp-tflint"
-
-  echo "${TFLINT_PATH}" >> "${GITHUB_PATH}"
-  export PATH="${TFLINT_PATH}:${PATH}"
 echo '::endgroup::'
 
 for RULESET in ${INPUT_TFLINT_RULESETS}; do
@@ -78,7 +71,7 @@ for RULESET in ${INPUT_TFLINT_RULESETS}; do
 done
 
 echo "::group:: Print tflint details ..."
-  tflint --version
+  "${TFLINT_PATH}/tflint" --version
 echo '::endgroup::'
 
 
@@ -89,8 +82,8 @@ echo '::group:: Running tflint with reviewdog 🐶 ...'
   set +Eeuo pipefail
 
   # shellcheck disable=SC2086
-  tflint --format=checkstyle ${INPUT_FLAGS} . \
-    | reviewdog -f=checkstyle \
+  TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR} "${TFLINT_PATH}/tflint" --format=checkstyle ${INPUT_FLAGS} . \
+    | "${REVIEWDOG_PATH}/reviewdog" -f=checkstyle \
         -name="tflint" \
         -reporter="${INPUT_REPORTER}" \
         -level="${INPUT_LEVEL}" \
