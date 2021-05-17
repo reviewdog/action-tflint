@@ -34,6 +34,11 @@ inputs:
       The tflint version to install and use.
       Default is to use the latest release version.
     default: 'latest'
+  tflint_rulesets:
+    description: |
+      Space separated, official (from the terraform-linters GitHub organization) tflint rulesets to install and use. If a pre-configured `TFLINT_PLUGIN_DIR` is set, rulesets are installed in that directory.
+      Default is empty.
+    default: ''
   flags:
     description: |
       List of arguments to send to tflint
@@ -68,6 +73,7 @@ runs:
         INPUT_FAIL_ON_ERROR: ${{ inputs.fail_on_error }}
         INPUT_WORKING_DIRECTORY: ${{ inputs.working_directory }}
         INPUT_TFLINT_VERSION: ${{ inputs.tflint_version }}
+        INPUT_TFLINT_RULESETS: ${{ inputs.tflint_rulesets }}
         INPUT_FLAGS: ${{ inputs.flags }}
 
 branding:
