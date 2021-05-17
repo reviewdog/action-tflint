@@ -72,7 +72,7 @@ The default is `latest`.
 
 ### `tflint_rulesets`
 
-Optional. Space separated, official (from the terraform-linters GitHub organization) tflint rulesets to install and use.
+Optional. Space separated, official (from the terraform-linters GitHub organization) tflint rulesets to install and use. If a pre-configured `TFLINT_PLUGIN_DIR` is set, rulesets are installed in that directory.
 Default is `` (empty).
 
 ### `flags`
