@@ -83,7 +83,7 @@ echo '::group:: Running tflint with reviewdog 🐶 ...'
 
   # shellcheck disable=SC2086
   TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR} "${TFLINT_PATH}/tflint" --format=checkstyle ${INPUT_FLAGS} . \
-    | "${REVIEWDOG_PATH}/reviewdog" -f=checkstyle \
+    | GITHUB_API="$GITHUB_API_URL" "${REVIEWDOG_PATH}/reviewdog" -f=checkstyle \
         -name="tflint" \
         -reporter="${INPUT_REPORTER}" \
         -level="${INPUT_LEVEL}" \
