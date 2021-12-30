@@ -70,6 +70,22 @@ for RULESET in ${INPUT_TFLINT_RULESETS}; do
   echo '::endgroup::'
 done
 
+case "${INPUT_TFLINT_INIT:-false}" in
+    true)
+        echo "::group:: Initialize tflint from local configuration"
+        TFLINT_PLUGIN_DIR="${TFLINT_PLUGIN_DIR}" "${TFLINT_PATH}/tflint" --init
+        echo "::endgroup::"
+        ;;
+    false)
+        true # do nothing
+        ;;
+    *)
+        echo "::group:: Initialize tflint from local configuration"
+        echo "Unknown option provided for tflint_init: ${INPUT_TFLINT_INIT}. Value must be one of ['true', 'false']."
+        echo "::endgroup::"
+        ;;
+esac
+
 echo "::group:: Print tflint details ..."
   "${TFLINT_PATH}/tflint" --version
 echo '::endgroup::'

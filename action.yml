@@ -39,6 +39,11 @@ inputs:
       Space separated, official (from the terraform-linters GitHub organization) tflint rulesets to install and use. If a pre-configured `TFLINT_PLUGIN_DIR` is set, rulesets are installed in that directory.
       Default is empty.
     default: ''
+  tflint_init:
+    description: |
+      Whether or not to run tflint --init prior to running scan [true,false]
+      Default is `false`.
+    default: 'false'
   flags:
     description: |
       List of arguments to send to tflint
@@ -74,6 +79,7 @@ runs:
         INPUT_WORKING_DIRECTORY: ${{ inputs.working_directory }}
         INPUT_TFLINT_VERSION: ${{ inputs.tflint_version }}
         INPUT_TFLINT_RULESETS: ${{ inputs.tflint_rulesets }}
+        INPUT_TFLINT_INIT: ${{ inputs.tflint_init }}
         INPUT_FLAGS: ${{ inputs.flags }}
 
 branding:
