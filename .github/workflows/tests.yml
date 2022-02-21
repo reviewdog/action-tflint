@@ -34,10 +34,10 @@ jobs:
           tflint_return="${{ steps.test.outputs.tflint-return-code }}"
           reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
 
-          if [[ "$tflint_return" -eq 3 ]]; then
+          if [[ "$tflint_return" -eq 2 ]]; then
             echo "tflint correctly returned failure ${tflint_return}"
           else
-            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            echo "tflint returned ${tflint_return}, expected '2'. Failing..."
             exit 1
           fi
 
@@ -72,10 +72,10 @@ jobs:
           tflint_return="${{ steps.test.outputs.tflint-return-code }}"
           reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
 
-          if [[ "$tflint_return" -eq 3 ]]; then
+          if [[ "$tflint_return" -eq 2 ]]; then
             echo "tflint correctly returned failure ${tflint_return}"
           else
-            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            echo "tflint returned ${tflint_return}, expected '2'. Failing..."
             exit 1
           fi
 
@@ -112,10 +112,10 @@ jobs:
           tflint_return="${{ steps.test.outputs.tflint-return-code }}"
           reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
 
-          if [[ "$tflint_return" -eq 3 ]]; then
+          if [[ "$tflint_return" -eq 2 ]]; then
             echo "tflint correctly returned failure ${tflint_return}"
           else
-            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            echo "tflint returned ${tflint_return}, expected '2'. Failing..."
             exit 1
           fi
 
@@ -150,10 +150,10 @@ jobs:
           tflint_return="${{ steps.test.outputs.tflint-return-code }}"
           reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
 
-          if [[ "$tflint_return" -eq 3 ]]; then
+          if [[ "$tflint_return" -eq 2 ]]; then
             echo "tflint correctly returned failure ${tflint_return}"
           else
-            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            echo "tflint returned ${tflint_return}, expected '2'. Failing..."
             exit 1
           fi
 
@@ -192,10 +192,10 @@ jobs:
         run: |
           tflint_return="${{ steps.test.outputs.tflint-return-code }}"
           reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
-          if [[ "$tflint_return" -eq 3 ]]; then
+          if [[ "$tflint_return" -eq 2 ]]; then
             echo "tflint correctly returned failure ${tflint_return}"
           else
-            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            echo "tflint returned ${tflint_return}, expected '2'. Failing..."
             exit 1
           fi
           if [[ "$reviewdog_return" -eq 0 ]]; then
@@ -232,10 +232,10 @@ jobs:
           tflint_return="${{ steps.test.outputs.tflint-return-code }}"
           reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
 
-          if [[ "$tflint_return" -eq 3 ]]; then
+          if [[ "$tflint_return" -eq 2 ]]; then
             echo "tflint correctly returned failure ${tflint_return}"
           else
-            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            echo "tflint returned ${tflint_return}, expected '2'. Failing..."
             exit 1
           fi
 
