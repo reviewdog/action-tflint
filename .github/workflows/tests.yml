@@ -165,7 +165,6 @@ jobs:
           fi
 
   test-init:
-    if: github.event_name == 'pull_request'
     name: tflint (init)
     runs-on: ubuntu-latest
 
