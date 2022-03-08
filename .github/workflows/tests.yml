@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: ./
         continue-on-error: true
@@ -34,10 +34,10 @@ jobs:
           tflint_return="${{ steps.test.outputs.tflint-return-code }}"
           reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
 
-          if [[ "$tflint_return" -eq 3 ]]; then
+          if [[ "$tflint_return" -eq 2 ]]; then
             echo "tflint correctly returned failure ${tflint_return}"
           else
-            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            echo "tflint returned ${tflint_return}, expected '2'. Failing..."
             exit 1
           fi
 
@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: ./
         continue-on-error: true
@@ -72,10 +72,10 @@ jobs:
           tflint_return="${{ steps.test.outputs.tflint-return-code }}"
           reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
 
-          if [[ "$tflint_return" -eq 3 ]]; then
+          if [[ "$tflint_return" -eq 2 ]]; then
             echo "tflint correctly returned failure ${tflint_return}"
           else
-            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            echo "tflint returned ${tflint_return}, expected '2'. Failing..."
             exit 1
           fi
 
@@ -92,7 +92,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: ./
         continue-on-error: true
@@ -112,10 +112,10 @@ jobs:
           tflint_return="${{ steps.test.outputs.tflint-return-code }}"
           reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
 
-          if [[ "$tflint_return" -eq 3 ]]; then
+          if [[ "$tflint_return" -eq 2 ]]; then
             echo "tflint correctly returned failure ${tflint_return}"
           else
-            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            echo "tflint returned ${tflint_return}, expected '2'. Failing..."
             exit 1
           fi
 
@@ -131,7 +131,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: ./
         continue-on-error: true
@@ -150,10 +150,10 @@ jobs:
           tflint_return="${{ steps.test.outputs.tflint-return-code }}"
           reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
 
-          if [[ "$tflint_return" -eq 3 ]]; then
+          if [[ "$tflint_return" -eq 2 ]]; then
             echo "tflint correctly returned failure ${tflint_return}"
           else
-            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            echo "tflint returned ${tflint_return}, expected '2'. Failing..."
             exit 1
           fi
 
@@ -210,7 +210,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v1
 
       - run: terraform init
@@ -224,7 +224,7 @@ jobs:
           reporter: github-pr-check
           level: info
           working_directory: tests/modules
-          tflint_version: v0.23.0
+          tflint_version: v0.32.0
 
       # The check is expected to fail on the test data
       - name: Check return codes
@@ -232,10 +232,10 @@ jobs:
         run: |
           tflint_return="${{ steps.test.outputs.tflint-return-code }}"
           reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
-          if [[ "$tflint_return" -eq 3 ]]; then
+          if [[ "$tflint_return" -eq 2 ]]; then
             echo "tflint correctly returned failure ${tflint_return}"
           else
-            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            echo "tflint returned ${tflint_return}, expected '2'. Failing..."
             exit 1
           fi
           if [[ "$reviewdog_return" -eq 0 ]]; then
@@ -254,7 +254,7 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: ./
         continue-on-error: true
@@ -272,10 +272,10 @@ jobs:
           tflint_return="${{ steps.test.outputs.tflint-return-code }}"
           reviewdog_return="${{ steps.test.outputs.reviewdog-return-code }}"
 
-          if [[ "$tflint_return" -eq 3 ]]; then
+          if [[ "$tflint_return" -eq 2 ]]; then
             echo "tflint correctly returned failure ${tflint_return}"
           else
-            echo "tflint returned ${tflint_return}, expected '3'. Failing..."
+            echo "tflint returned ${tflint_return}, expected '2'. Failing..."
             exit 1
           fi
 
