@@ -246,7 +246,6 @@ jobs:
           fi
 
   test-operating-systems:
-    if: github.event_name == 'pull_request'
     strategy:
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
@@ -261,7 +260,7 @@ jobs:
         id: test
         with:
           github_token: ${{ secrets.github_token }}
-          reporter: github-pr-check
+          reporter: github-check
           level: info
           working_directory: tests/reviewdog-reporters
 
