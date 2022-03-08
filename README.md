@@ -75,6 +75,11 @@ The default is `latest`.
 Optional. Space separated, official (from the terraform-linters GitHub organization) tflint rulesets to install and use. If a pre-configured `TFLINT_PLUGIN_DIR` is set, rulesets are installed in that directory.
 Default is `` (empty).
 
+### `tflint_init`
+
+Optional. Whether to run `tflint --init` prior to linting (useful if you have a .tflint.hcl with some values in it).
+The default is `false`.
+
 ### `flags`
 
 Optional. List of arguments to send to `tflint`.
