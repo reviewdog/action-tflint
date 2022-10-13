@@ -98,7 +98,7 @@ echo '::group:: Running tflint with reviewdog 🐶 ...'
   set +Eeuo pipefail
 
   # shellcheck disable=SC2086
-  TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR} "${TFLINT_PATH}/tflint" --format=checkstyle ${INPUT_FLAGS} . \
+  TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR} "${TFLINT_PATH}/tflint" --format=checkstyle ${INPUT_FLAGS} ${INPUT_TFLINT_TARGET_DIR} \
     | "${REVIEWDOG_PATH}/reviewdog" -f=checkstyle \
         -name="tflint" \
         -reporter="${INPUT_REPORTER}" \
