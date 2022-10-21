@@ -170,7 +170,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: hashicorp/setup-terraform@v1
+      - uses: hashicorp/setup-terraform@v2
 
       - run: terraform init
         working-directory: tests/init
@@ -211,7 +211,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: hashicorp/setup-terraform@v1
+      - uses: hashicorp/setup-terraform@v2
 
       - run: terraform init
         working-directory: tests/modules
