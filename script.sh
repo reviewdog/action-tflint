@@ -107,8 +107,8 @@ echo '::group:: Running tflint with reviewdog 🐶 ...'
         -filter-mode="${INPUT_FILTER_MODE}"
 
   tflint_return="${PIPESTATUS[0]}" reviewdog_return="${PIPESTATUS[1]}" exit_code=$?
-  echo "::set-output name=tflint-return-code::${tflint_return}"
-  echo "::set-output name=reviewdog-return-code::${reviewdog_return}"
+  echo "tflint-return-code=${tflint_return}" >> "${GITHUB_OUTPUT}"
+  echo "reviewdog-return-code=${reviewdog_return}" >> "${GITHUB_OUTPUT}"
 echo '::endgroup::'
 
 exit "${exit_code}"
