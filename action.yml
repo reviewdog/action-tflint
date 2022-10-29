@@ -45,6 +45,11 @@ inputs:
       Whether or not to run tflint --init prior to running scan [true,false]
       Default is `false`.
     default: 'false'
+  tflint_target_dir:
+    description: |
+      The target dir for the tflint command. This is the directory passed to tflint as opposed to working_directory which is the directory the command is executed from.
+      Default is . ( root of the repository)
+    default: '.'
   flags:
     description: |
       List of arguments to send to tflint
@@ -81,6 +86,7 @@ runs:
         INPUT_TFLINT_VERSION: ${{ inputs.tflint_version }}
         INPUT_TFLINT_RULESETS: ${{ inputs.tflint_rulesets }}
         INPUT_TFLINT_INIT: ${{ inputs.tflint_init }}
+        INPUT_TFLINT_TARGET_DIR: ${{ inputs.tflint_target_dir }}
         INPUT_FLAGS: ${{ inputs.flags }}
 
 branding:
