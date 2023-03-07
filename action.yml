@@ -50,6 +50,11 @@ inputs:
       The target dir for the tflint command. This is the directory passed to tflint as opposed to working_directory which is the directory the command is executed from.
       Default is . ( root of the repository)
     default: '.'
+  tflint_config:
+    description: |
+      Config file name for tflint.
+      Default is `.tflint.hcl`.
+    default: '.tflint.hcl'
   flags:
     description: |
       List of arguments to send to tflint
@@ -87,6 +92,7 @@ runs:
         INPUT_TFLINT_RULESETS: ${{ inputs.tflint_rulesets }}
         INPUT_TFLINT_INIT: ${{ inputs.tflint_init }}
         INPUT_TFLINT_TARGET_DIR: ${{ inputs.tflint_target_dir }}
+        INPUT_TFLINT_CONFIG: ${{ inputs.tflint_config }}
         INPUT_FLAGS: ${{ inputs.flags }}
 
 branding:

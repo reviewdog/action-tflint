@@ -73,7 +73,7 @@ done
 case "${INPUT_TFLINT_INIT:-false}" in
     true)
         echo "::group:: Initialize tflint from local configuration"
-        TFLINT_PLUGIN_DIR="${TFLINT_PLUGIN_DIR}" "${TFLINT_PATH}/tflint" --init
+        TFLINT_PLUGIN_DIR="${TFLINT_PLUGIN_DIR}" "${TFLINT_PATH}/tflint" --init -c ${INPUT_TFLINT_CONFIG}
         echo "::endgroup::"
         ;;
     false)
@@ -87,7 +87,7 @@ case "${INPUT_TFLINT_INIT:-false}" in
 esac
 
 echo "::group:: Print tflint details ..."
-  "${TFLINT_PATH}/tflint" --version
+  "${TFLINT_PATH}/tflint" --version -c ${INPUT_TFLINT_CONFIG}
 echo '::endgroup::'
 
 
@@ -98,7 +98,7 @@ echo '::group:: Running tflint with reviewdog 🐶 ...'
   set +Eeuo pipefail
 
   # shellcheck disable=SC2086
-  TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR} "${TFLINT_PATH}/tflint" --format=checkstyle ${INPUT_FLAGS} ${INPUT_TFLINT_TARGET_DIR} \
+  TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR} "${TFLINT_PATH}/tflint"  -c ${INPUT_TFLINT_CONFIG} --format=checkstyle ${INPUT_FLAGS} ${INPUT_TFLINT_TARGET_DIR} \
     | "${REVIEWDOG_PATH}/reviewdog" -f=checkstyle \
         -name="tflint" \
         -reporter="${INPUT_REPORTER}" \
