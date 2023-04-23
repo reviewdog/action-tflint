@@ -18,6 +18,6 @@ jobs:
         uses: actions/checkout@master
 
       - name: Manage labels
-        uses: lannonbr/issue-label-manager-action@3.0.1
+        uses: lannonbr/issue-label-manager-action@4.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
