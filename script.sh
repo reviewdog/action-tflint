@@ -87,7 +87,7 @@ case "${INPUT_TFLINT_INIT:-false}" in
 esac
 
 echo "::group:: Print tflint details ..."
-  "${TFLINT_PATH}/tflint" --version -c ${INPUT_TFLINT_CONFIG}
+  "${TFLINT_PATH}/tflint" --version -c "${INPUT_TFLINT_CONFIG}"
 echo '::endgroup::'
 
 
