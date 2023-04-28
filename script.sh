@@ -30,7 +30,7 @@ echo '::group::Preparing'
 
   if [[ -z "${INPUT_TFLINT_VERSION}" ]] || [[ "${INPUT_TFLINT_VERSION}" == "latest" ]]; then
     echo "Looking up the latest tflint version ..."
-    tflint_version=$(curl --silent --show-error --fail --location "https://api.github.com/repos/terraform-linters/tflint/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+    tflint_version=$(curl -H "Authorization: Bearer ${INPUT_GITHUB_TOKEN}" --silent --show-error --fail --location "https://api.github.com/repos/terraform-linters/tflint/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
   else
     tflint_version=${INPUT_TFLINT_VERSION}
   fi
@@ -73,7 +73,7 @@ done
 case "${INPUT_TFLINT_INIT:-false}" in
     true)
         echo "::group:: Initialize tflint from local configuration"
-        TFLINT_PLUGIN_DIR="${TFLINT_PLUGIN_DIR}" "${TFLINT_PATH}/tflint" --init -c ${INPUT_TFLINT_CONFIG}
+        TFLINT_PLUGIN_DIR="${TFLINT_PLUGIN_DIR}" GITHUB_TOKEN="${INPUT_GITHUB_TOKEN}" "${TFLINT_PATH}/tflint" --init -c ${INPUT_TFLINT_CONFIG}
         echo "::endgroup::"
         ;;
     false)
