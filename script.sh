@@ -97,8 +97,18 @@ echo '::group:: Running tflint with reviewdog 🐶 ...'
   # Allow failures now, as reviewdog handles them
   set +Eeuo pipefail
 
+
+  # We only want to specify the tflint target directory if it is not the default to avoid conflicts
+  CHDIR_COMMAND=""
+  if [ "$INPUT_TFLINT_TARGET_DIR" == "." ]; then
+    echo "Using default working directory. No need to specify chdir"
+  else
+    echo "Custom target directory specified."
+    CHDIR_COMMAND="--chdir=${INPUT_TFLINT_TARGET_DIR}"
+  fi
+
   # shellcheck disable=SC2086
-  TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR} "${TFLINT_PATH}/tflint" -c "${INPUT_TFLINT_CONFIG}" --format=checkstyle ${INPUT_FLAGS} --chdir=${INPUT_TFLINT_TARGET_DIR} \
+  TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR} "${TFLINT_PATH}/tflint" -c "${INPUT_TFLINT_CONFIG}" --format=checkstyle ${INPUT_FLAGS} ${CHDIR_COMMAND} \
     | "${REVIEWDOG_PATH}/reviewdog" -f=checkstyle \
         -name="tflint" \
         -reporter="${INPUT_REPORTER}" \
