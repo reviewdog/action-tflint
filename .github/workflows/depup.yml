@@ -17,3 +17,13 @@ jobs:
           version_name: REVIEWDOG_VERSION
           repo: reviewdog/reviewdog
           labels: "bump:minor"
+
+  tflint-ruleset-azurerm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: reviewdog/action-depup/with-pr@v1
+        with:
+          file: tests/init/.tflint.hcl
+          version_name: version
+          repo: terraform-linters/tflint-ruleset-azurerm
