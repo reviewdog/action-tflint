@@ -11,7 +11,7 @@ jobs:
   reviewdog:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: reviewdog/action-depup/with-pr@v1
         with:
           file: action.yml
@@ -22,7 +22,7 @@ jobs:
   tflint-ruleset-azurerm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: reviewdog/action-depup/with-pr@v1
         with:
           file: tests/init/.tflint.hcl
