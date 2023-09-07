@@ -108,7 +108,7 @@ jobs:
 
     steps:
       - name: Clone repo
-        uses: actions/checkout@master
+        uses: actions/checkout@v4
 
       # Install latest Terraform manually as
       #  Docker-based GitHub Actions are
@@ -125,13 +125,13 @@ jobs:
 
       # Minimal example
       - name: tflint
-        uses: reviewdog/action-tflint@master
+        uses: reviewdog/action-tflint@v1
         with:
           github_token: ${{ secrets.github_token }}
 
       # More complex example
       - name: tflint
-        uses: reviewdog/action-tflint@master
+        uses: reviewdog/action-tflint@v1
         with:
           github_token: ${{ secrets.github_token }}
           working_directory: "testdata" # Optional. Change working directory
@@ -141,7 +141,6 @@ jobs:
           tflint_version: "v0.24.0" # Optional. Custom version, instead of latest
           tflint_rulesets: "azurerm google" # Optional. Extra official rulesets to install
           flags: "--module" # Optional. Add custom tflint flags
-
 ```
 
 ## Development
