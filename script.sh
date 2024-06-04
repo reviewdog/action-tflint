@@ -109,7 +109,7 @@ echo '::group:: Running tflint with reviewdog 🐶 ...'
 
   # shellcheck disable=SC2086
   TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR} "${TFLINT_PATH}/tflint" -c "${INPUT_TFLINT_CONFIG}" --format=checkstyle ${INPUT_FLAGS} ${CHDIR_COMMAND} \
-    | "${REVIEWDOG_PATH}/reviewdog" -f=checkstyle \
+    | sed -e "s/rule=/source=/g"| "${REVIEWDOG_PATH}/reviewdog" -f=checkstyle \
         -name="tflint" \
         -reporter="${INPUT_REPORTER}" \
         -level="${INPUT_LEVEL}" \
