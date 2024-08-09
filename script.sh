@@ -20,6 +20,7 @@ echo '::group::Preparing'
   case "${unameArch}" in
     x86*)      arch=amd64;;
     aarch64*)  arch=arm;;
+    arm64*)    arch=arm;;
     *)         echo "Unsupported architecture: ${unameArch}" && exit 1
   esac
 
