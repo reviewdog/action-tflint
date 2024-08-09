@@ -256,8 +256,6 @@ jobs:
 
       - run: curl -h
         shell: bash
-      - run: wget -h
-        shell: bash
       - uses: ./
         continue-on-error: true
         id: test
