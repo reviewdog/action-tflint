@@ -254,9 +254,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: curl -v
+      - run: curl -h
         shell: bash
-      - run: wget -v
+      - run: wget -h
         shell: bash
       - uses: ./
         continue-on-error: true
