@@ -1,11 +1,11 @@
 # GitHub Action: Run tflint with reviewdog
 
-[![Test](https://github.com/reviewdog/action-tflint/workflows/Test/badge.svg)](https://github.com/reviewdog/action-tflint/actions?query=workflow%3ATest)
-[![reviewdog](https://github.com/reviewdog/action-tflint/workflows/reviewdog/badge.svg)](https://github.com/reviewdog/action-tflint/actions?query=workflow%3Areviewdog)
+[![Tests](https://github.com/reviewdog/action-tflint/workflows/Tests/badge.svg)](https://github.com/reviewdog/action-tflint/actions?query=workflow%3ATests)
+[![Lint](https://github.com/reviewdog/action-tflint/workflows/Lint/badge.svg)](https://github.com/reviewdog/action-tflint/actions?query=workflow%3ALint)
 [![release](https://github.com/reviewdog/action-tflint/workflows/release/badge.svg)](https://github.com/reviewdog/action-tflint/actions?query=workflow%3Arelease)
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/reviewdog/action-tflint?logo=github&sort=semver)](https://github.com/reviewdog/action-tflint/releases)
 [![action-bumpr supported](https://img.shields.io/badge/bumpr-supported-ff69b4?logo=github&link=https://github.com/haya14busa/action-bumpr)](https://github.com/haya14busa/action-bumpr)
-[![depup](https://github.com/reviewdogaction-tflint/workflows/depup/badge.svg?branch=master&event=push)](https://github.com/reviewdog/action-tflint/actions?query=workflow%3Adepup+event%3Apush+branch%3Amaster)
+[![depup](https://github.com/reviewdog/action-tflint/workflows/depup/badge.svg)](https://github.com/reviewdog/action-tflint/actions?query=workflow%3Adepup)
 
 This action runs [tflint](https://github.com/wata727/tflint) with
 [reviewdog](https://github.com/reviewdog/reviewdog) on pull requests
