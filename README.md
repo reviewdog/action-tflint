@@ -84,7 +84,7 @@ The default is `false`.
 
 Optional. List of arguments to send to `tflint`.
 For the output to be parsable by reviewdog [`--format=checkstyle` is enforced](./entrypoint.sh).
-The default is `--module`.
+The default is `--call-module-type=all`.
 
 ## Outputs
 
@@ -118,7 +118,7 @@ jobs:
         run: |
           brew install terraform
 
-      # Run init to get module code to be able to use `--module`
+      # Run init to get module code to be able to use `--call-module-type=all`
       - name: Terraform init
         run: |
           terraform init
@@ -140,7 +140,7 @@ jobs:
           filter_mode: "nofilter" # Optional. Check all files, not just the diff
           tflint_version: "v0.24.0" # Optional. Custom version, instead of latest
           tflint_rulesets: "azurerm google" # Optional. Extra official rulesets to install
-          flags: "--module" # Optional. Add custom tflint flags
+          flags: "--call-module-type=all" # Optional. Add custom tflint flags
 ```
 
 ## Development
