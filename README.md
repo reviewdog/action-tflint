@@ -80,6 +80,16 @@ Default is `` (empty).
 Optional. Whether to run `tflint --init` prior to linting (useful if you have a .tflint.hcl with some values in it).
 The default is `false`.
 
+### `tflint_target_dir`
+
+Optional. The target dir for the tflint command. This is the directory passed to tflint as opposed to working_directory which is the directory the command is executed from.
+The default is `.`.
+
+### `tflint_config`
+
+Optional. Config file name for tflint.
+The default is `.tflint.hcl`
+
 ### `flags`
 
 Optional. List of arguments to send to `tflint`.
