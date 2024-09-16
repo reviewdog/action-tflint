@@ -59,8 +59,8 @@ inputs:
     description: |
       List of arguments to send to tflint
       For the output to be parsable by reviewdog --format=checkstyle is enforced
-      Default is --module.
-    default: '--module'
+      Default is --call-module-type=all.
+    default: '--call-module-type=all'
 
 outputs:
   tflint-return-code:
