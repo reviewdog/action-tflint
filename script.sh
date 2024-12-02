@@ -114,6 +114,7 @@ echo '::group:: Running tflint with reviewdog 🐶 ...'
         -name="tflint" \
         -reporter="${INPUT_REPORTER}" \
         -level="${INPUT_LEVEL}" \
+        -fail-level="${INPUT_FAIL_LEVEL}" \
         -fail-on-error="${INPUT_FAIL_ON_ERROR}" \
         -filter-mode="${INPUT_FILTER_MODE}"
 
