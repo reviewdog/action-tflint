@@ -52,8 +52,15 @@ The default is `added`.
 
 See [reviewdog documentation for filter mode](https://github.com/reviewdog/reviewdog/tree/master#filter-mode) for details.
 
+### `fail_level`
+
+Optional. If set to `none`, always use exit code 0 for reviewdog. Otherwise, exit code 1 for reviewdog if it finds at least 1 issue with severity greater than or equal to the given level.
+Possible values: [`none`, `any`, `info`, `warning`, `error`]
+Default is `none`.
+
 ### `fail_on_error`
 
+Deprecated, use `fail_level` instead.
 Optional. Exit code for reviewdog when errors are found [`true`,`false`].
 
 The default is `false`.
