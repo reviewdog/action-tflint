@@ -52,8 +52,16 @@ The default is `added`.
 
 See [reviewdog documentation for filter mode](https://github.com/reviewdog/reviewdog/tree/master#filter-mode) for details.
 
+### `fail_level`
+
+Optional. If set to `none`, always use exit code 0 for reviewdog.
+Otherwise, exit code 1 for reviewdog if it finds at least 1 issue with severity greater than or equal to the given level.
+Possible values: [`none`, `any`, `info`, `warning`, `error`]
+Default is `none`.
+
 ### `fail_on_error`
 
+Deprecated, use `fail_level` instead.
 Optional. Exit code for reviewdog when errors are found [`true`,`false`].
 
 The default is `false`.
@@ -146,7 +154,7 @@ jobs:
           github_token: ${{ secrets.github_token }}
           working_directory: "testdata" # Optional. Change working directory
           reporter: github-pr-review # Optional. Change reporter
-          fail_on_error: "true" # Optional. Fail action if errors are found
+          fail_level: "any" # Optional. Fail action if it finds at least 1 issue with severity greater than or equal to the given level.
           filter_mode: "nofilter" # Optional. Check all files, not just the diff
           tflint_version: "v0.24.0" # Optional. Custom version, instead of latest
           tflint_rulesets: "azurerm google" # Optional. Extra official rulesets to install
