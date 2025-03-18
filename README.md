@@ -126,7 +126,7 @@ jobs:
 
     steps:
       - name: Clone repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       # Install latest Terraform manually as
       #  Docker-based GitHub Actions are
@@ -143,13 +143,13 @@ jobs:
 
       # Minimal example
       - name: tflint
-        uses: reviewdog/action-tflint@v1
+        uses: reviewdog/action-tflint@41b4770c9d9e50741c20e431986b33124a07ca52 # v1.24.2
         with:
           github_token: ${{ secrets.github_token }}
 
       # More complex example
       - name: tflint
-        uses: reviewdog/action-tflint@v1
+        uses: reviewdog/action-tflint@41b4770c9d9e50741c20e431986b33124a07ca52 # v1.24.2
         with:
           github_token: ${{ secrets.github_token }}
           working_directory: "testdata" # Optional. Change working directory
