@@ -93,7 +93,7 @@ echo '::endgroup::'
 
 
 echo '::group:: Running tflint with reviewdog 🐶 ...'
-  export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
+  export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_REVIEWDOG_GITHUB_API_TOKEN}"
 
   # Allow failures now, as reviewdog handles them
   set +Eeuo pipefail

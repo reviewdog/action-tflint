@@ -70,6 +70,9 @@ inputs:
       For the output to be parsable by reviewdog --format=checkstyle is enforced
       Default is --call-module-type=all.
     default: '--call-module-type=all'
+  reviewdog_github_api_token:
+    description: 'REVIEWDOG_GITHUB_API_TOKEN'
+    default: ${{ github.token }}
 
 outputs:
   tflint-return-code:
@@ -104,6 +107,7 @@ runs:
         INPUT_TFLINT_TARGET_DIR: ${{ inputs.tflint_target_dir }}
         INPUT_TFLINT_CONFIG: ${{ inputs.tflint_config }}
         INPUT_FLAGS: ${{ inputs.flags }}
+        INPUT_REVIEWDOG_GITHUB_API_TOKEN: ${{ inputs.reviewdog_github_api_token }}
 
 branding:
   icon: 'edit'
