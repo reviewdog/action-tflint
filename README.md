@@ -107,7 +107,8 @@ The default is `--call-module-type=all`.
 ### `reviewdog_github_api_token`
 
 Optional. The value of REVIEWDOG_GITHUB_API_TOKEN environment variable.
-The default is `${{ github.token }}`.
+If value is empty string, use `github_token` value.
+The default is `''`.
 
 ## Outputs
 

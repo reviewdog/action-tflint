@@ -72,7 +72,7 @@ inputs:
     default: '--call-module-type=all'
   reviewdog_github_api_token:
     description: 'REVIEWDOG_GITHUB_API_TOKEN'
-    default: ${{ github.token }}
+    default: ''
 
 outputs:
   tflint-return-code:
