@@ -14,17 +14,17 @@ jobs:
     if: github.event.action != 'labeled'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       # Bump version on merging Pull Requests with specific labels.
       # (bump:major,bump:minor,bump:patch)
       - id: bumpr
         if: "!startsWith(github.ref, 'refs/tags/')"
-        uses: haya14busa/action-bumpr@78ab5a104d20896c9c9122c64221b3aecf1a8cbb # v1.10.0
+        uses: haya14busa/action-bumpr@faf6f474bcb6174125cfc569f0b2e24cbf03d496 # v1.11.4
 
       # Update corresponding major and minor tag.
       # e.g. Update v1 and v1.2 when releasing v1.2.3
-      - uses: haya14busa/action-update-semver@fb48464b2438ae82cc78237be61afb4f461265a1 # v1.2.1
+      - uses: haya14busa/action-update-semver@7d2c558640ea49e798d46539536190aff8c18715 # v1.5.1
         if: "!steps.bumpr.outputs.skip"
         with:
           tag: ${{ steps.bumpr.outputs.next_version }}
@@ -50,6 +50,6 @@ jobs:
     if: github.event.action == 'labeled'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Post bumpr status comment
-        uses: haya14busa/action-bumpr@78ab5a104d20896c9c9122c64221b3aecf1a8cbb # v1.10.0
+        uses: haya14busa/action-bumpr@faf6f474bcb6174125cfc569f0b2e24cbf03d496 # v1.11.4
