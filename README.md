@@ -7,7 +7,7 @@
 [![action-bumpr supported](https://img.shields.io/badge/bumpr-supported-ff69b4?logo=github&link=https://github.com/haya14busa/action-bumpr)](https://github.com/haya14busa/action-bumpr)
 [![depup](https://github.com/reviewdog/action-tflint/workflows/depup/badge.svg)](https://github.com/reviewdog/action-tflint/actions?query=workflow%3Adepup)
 
-This action runs [tflint](https://github.com/wata727/tflint) with
+This action runs [tflint](https://github.com/terraform-linters/tflint) with
 [reviewdog](https://github.com/reviewdog/reviewdog) on pull requests
 to enforce best practices.
 
