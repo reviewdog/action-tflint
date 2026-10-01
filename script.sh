@@ -118,7 +118,13 @@ echo '::group:: Running tflint with reviewdog 🐶 ...'
         -fail-on-error="${INPUT_FAIL_ON_ERROR}" \
         -filter-mode="${INPUT_FILTER_MODE}"
 
-  tflint_return="${PIPESTATUS[0]}" reviewdog_return="${PIPESTATUS[1]}" exit_code=$?
+  tflint_return="${PIPESTATUS[0]}" reviewdog_return="${PIPESTATUS[1]}"
+  exit_code="${reviewdog_return}"
+  # TFLint uses 2 for lint findings, whose failure policy belongs to reviewdog.
+  # Other nonzero statuses indicate execution errors, not lint findings.
+  if [[ "${tflint_return}" -ne 0 && "${tflint_return}" -ne 2 ]]; then
+    exit_code="${tflint_return}"
+  fi
   echo "tflint-return-code=${tflint_return}" >> "${GITHUB_OUTPUT}"
   echo "reviewdog-return-code=${reviewdog_return}" >> "${GITHUB_OUTPUT}"
 echo '::endgroup::'
