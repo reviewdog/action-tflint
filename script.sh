@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Enable debug mode if RUNNER_DEBUG is set to 1
+if [ "${RUNNER_DEBUG:-}" = "1" ] ; then
+  set -x
+fi
+
 # Fail fast on errors, unset variables, and failures in piped commands
 set -Eeuo pipefail
 
