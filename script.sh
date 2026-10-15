@@ -114,20 +114,22 @@ echo '::group:: Running tflint with reviewdog 🐶 ...'
   fi
 
   # shellcheck disable=SC2086
-  TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR} "${TFLINT_PATH}/tflint" -c "${INPUT_TFLINT_CONFIG}" ${INPUT_FLAGS} ${CHDIR_COMMAND} --format=checkstyle \
-    | "${REVIEWDOG_PATH}/reviewdog" -f=checkstyle \
+  TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR} "${TFLINT_PATH}/tflint" -c "${INPUT_TFLINT_CONFIG}" ${INPUT_FLAGS} ${CHDIR_COMMAND} --format=checkstyle > "${TEMP_PATH}/tflint.out"
+  tflint_return="$?"
+
+  "${REVIEWDOG_PATH}/reviewdog" -f=checkstyle \
         -name="tflint" \
         -reporter="${INPUT_REPORTER}" \
         -level="${INPUT_LEVEL}" \
         -fail-level="${INPUT_FAIL_LEVEL}" \
         -fail-on-error="${INPUT_FAIL_ON_ERROR}" \
-        -filter-mode="${INPUT_FILTER_MODE}"
-
-  tflint_return="${PIPESTATUS[0]}" reviewdog_return="${PIPESTATUS[1]}"
+        -filter-mode="${INPUT_FILTER_MODE}" < "${TEMP_PATH}/tflint.out"
+  reviewdog_return="$?"
   exit_code="${reviewdog_return}"
   # TFLint uses 2 for lint findings, whose failure policy belongs to reviewdog.
   # Other nonzero statuses indicate execution errors, not lint findings.
   if [[ "${tflint_return}" -ne 0 && "${tflint_return}" -ne 2 ]]; then
+    cat "${TEMP_PATH}/tflint.out"
     exit_code="${tflint_return}"
   fi
   echo "tflint-return-code=${tflint_return}" >> "${GITHUB_OUTPUT}"
