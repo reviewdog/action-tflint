@@ -100,6 +100,9 @@ echo '::endgroup::'
 echo '::group:: Running tflint with reviewdog 🐶 ...'
   export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_REVIEWDOG_GITHUB_API_TOKEN:-${INPUT_GITHUB_TOKEN}}"
 
+  tflint_out="$(mktemp)"
+  trap 'rm -f "${tflint_out}"' EXIT
+
   # Allow failures now, as reviewdog handles them
   set +Eeuo pipefail
 
@@ -114,7 +117,7 @@ echo '::group:: Running tflint with reviewdog 🐶 ...'
   fi
 
   # shellcheck disable=SC2086
-  TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR} "${TFLINT_PATH}/tflint" -c "${INPUT_TFLINT_CONFIG}" ${INPUT_FLAGS} ${CHDIR_COMMAND} --format=checkstyle > "${TEMP_PATH}/tflint.out"
+  TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR} "${TFLINT_PATH}/tflint" -c "${INPUT_TFLINT_CONFIG}" ${INPUT_FLAGS} ${CHDIR_COMMAND} --format=checkstyle > "${tflint_out}"
   tflint_return="$?"
 
   "${REVIEWDOG_PATH}/reviewdog" -f=checkstyle \
@@ -123,7 +126,7 @@ echo '::group:: Running tflint with reviewdog 🐶 ...'
         -level="${INPUT_LEVEL}" \
         -fail-level="${INPUT_FAIL_LEVEL}" \
         -fail-on-error="${INPUT_FAIL_ON_ERROR}" \
-        -filter-mode="${INPUT_FILTER_MODE}" < "${TEMP_PATH}/tflint.out"
+        -filter-mode="${INPUT_FILTER_MODE}" < "${tflint_out}"
   reviewdog_return="$?"
   exit_code="${reviewdog_return}"
   # TFLint uses 2 for lint findings, whose failure policy belongs to reviewdog.
@@ -131,7 +134,7 @@ echo '::group:: Running tflint with reviewdog 🐶 ...'
   if [[ "${tflint_return}" -ne 0 && "${tflint_return}" -ne 2 ]]; then
     echo "TFLint execution error:" >&2
     echo "Exit code: ${tflint_return}" >&2
-    cat "${TEMP_PATH}/tflint.out"
+    cat "${tflint_out}"
     exit_code="${tflint_return}"
   fi
   echo "tflint-return-code=${tflint_return}" >> "${GITHUB_OUTPUT}"
