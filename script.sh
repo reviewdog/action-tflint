@@ -129,6 +129,8 @@ echo '::group:: Running tflint with reviewdog 🐶 ...'
   # TFLint uses 2 for lint findings, whose failure policy belongs to reviewdog.
   # Other nonzero statuses indicate execution errors, not lint findings.
   if [[ "${tflint_return}" -ne 0 && "${tflint_return}" -ne 2 ]]; then
+    echo "TFLint execution error:" >&2
+    echo "Exit code: ${tflint_return}" >&2
     cat "${TEMP_PATH}/tflint.out"
     exit_code="${tflint_return}"
   fi
