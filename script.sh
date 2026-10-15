@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Enable debug mode if RUNNER_DEBUG is set to 1
+if [ "${RUNNER_DEBUG:-}" = "1" ] ; then
+  set -x
+fi
+
 # Fail fast on errors, unset variables, and failures in piped commands
 set -Eeuo pipefail
 
@@ -95,6 +100,9 @@ echo '::endgroup::'
 echo '::group:: Running tflint with reviewdog 🐶 ...'
   export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_REVIEWDOG_GITHUB_API_TOKEN:-${INPUT_GITHUB_TOKEN}}"
 
+  tflint_out="$(mktemp)"
+  trap 'rm -f "${tflint_out}"' EXIT
+
   # Allow failures now, as reviewdog handles them
   set +Eeuo pipefail
 
@@ -109,20 +117,24 @@ echo '::group:: Running tflint with reviewdog 🐶 ...'
   fi
 
   # shellcheck disable=SC2086
-  TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR} "${TFLINT_PATH}/tflint" -c "${INPUT_TFLINT_CONFIG}" ${INPUT_FLAGS} ${CHDIR_COMMAND} --format=checkstyle \
-    | "${REVIEWDOG_PATH}/reviewdog" -f=checkstyle \
+  TFLINT_PLUGIN_DIR=${TFLINT_PLUGIN_DIR} "${TFLINT_PATH}/tflint" -c "${INPUT_TFLINT_CONFIG}" ${INPUT_FLAGS} ${CHDIR_COMMAND} --format=checkstyle > "${tflint_out}"
+  tflint_return="$?"
+
+  "${REVIEWDOG_PATH}/reviewdog" -f=checkstyle \
         -name="tflint" \
         -reporter="${INPUT_REPORTER}" \
         -level="${INPUT_LEVEL}" \
         -fail-level="${INPUT_FAIL_LEVEL}" \
         -fail-on-error="${INPUT_FAIL_ON_ERROR}" \
-        -filter-mode="${INPUT_FILTER_MODE}"
-
-  tflint_return="${PIPESTATUS[0]}" reviewdog_return="${PIPESTATUS[1]}"
+        -filter-mode="${INPUT_FILTER_MODE}" < "${tflint_out}"
+  reviewdog_return="$?"
   exit_code="${reviewdog_return}"
   # TFLint uses 2 for lint findings, whose failure policy belongs to reviewdog.
   # Other nonzero statuses indicate execution errors, not lint findings.
   if [[ "${tflint_return}" -ne 0 && "${tflint_return}" -ne 2 ]]; then
+    echo "TFLint execution error:" >&2
+    echo "Exit code: ${tflint_return}" >&2
+    cat "${tflint_out}"
     exit_code="${tflint_return}"
   fi
   echo "tflint-return-code=${tflint_return}" >> "${GITHUB_OUTPUT}"
