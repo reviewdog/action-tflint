@@ -20,7 +20,7 @@ jobs:
           if_true: "github-pr-review"
           if_false: "github-check"
 
-      - uses: reviewdog/action-shellcheck@v1.35.0
+      - uses: reviewdog/action-shellcheck@v1.35.1
         with:
           github_token: ${{ secrets.github_token }}
           reporter: ${{ steps.reporter.outputs.value }}
