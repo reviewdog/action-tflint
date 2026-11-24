@@ -12,7 +12,7 @@ workflows:
     '.github/workflows/lint.yml':
         - 'actions/checkout@v7.0.1'
         - 'haya14busa/action-cond@v1.2.1'
-        - 'reviewdog/action-misspell@v1.31.0'
+        - 'reviewdog/action-misspell@v1.31.1'
         - 'reviewdog/action-shellcheck@v1.35.1'
     '.github/workflows/release.yml':
         - 'actions/checkout@v7.0.1'
@@ -76,9 +76,9 @@ dependencies:
         uses:
             - 'peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1'
             - 'reviewdog/action-depup@680d0a6dedb9c170ec21b8e1eacf7a1133937743'
-    'reviewdog/action-misspell@v1.31.0':
-        ref: 'v1.31.0'
-        commit: 'sha1-c846b6b0996029d2d39540c8ffebebbd957072db'
+    'reviewdog/action-misspell@v1.31.1':
+        ref: 'v1.31.1'
+        commit: 'sha1-ebdfc4655a67997a255a63b9e4b71abf32c98e6b'
         owner_id: 48765237
         repo_id: 208637003
     'reviewdog/action-setup@d8a7baabd7f3e8544ee4dbde3ee41d0011c3a93f':
